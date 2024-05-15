@@ -21,15 +21,6 @@ class User(BaseModel):
     url: str
     age: int
 
-# "Base de datos"
-users_list = [
-    User(id = 1, name = "Ariel", surname = "Tequida", url = "http://teqnobit.com", age = 27),
-    User(id = 2, name = "Jesus", surname = "Andujo", url = "http://www.google.com", age = 27),
-    User(id = 3, name = "Fer", surname = "Luna", url = "Ferluna.com", age = 23)
-]
-
-
-
 
 @router.get("/", response_model=list[UserMo])
 def users():
@@ -44,14 +35,9 @@ def user(id: str):
     return searchUser("_id", ObjectId(id))
 
 
-
-
 @router.post("/", response_model=UserMo, status_code=201)
 def user(user: UserMo):
-    # if type(search_user(user.id) == User):
-    #     raise HTTPException(status_code=404, detail="El usuario ya existe")
-    # users_list.append(user)
-
+    
     if type(searchUser("email", user.email)) == UserMo:
         raise HTTPException(status_code=404, detail="El usuario ya existe")
 
@@ -64,7 +50,6 @@ def user(user: UserMo):
     new_user = user_schema(db_client.users.find_one({"_id": id}))
 
     return UserMo(**new_user)
-    
 
 
 @router.put("/")
@@ -97,6 +82,7 @@ def user(id: str):
         return {"error": "No se ha eliminado el usuario"}
     else:
         return {"message": "Usuario eliminado exitosamente"}
+
 
 def searchUser(field: str, key):
     # users = filter(lambda user: user.id == id, users_list)

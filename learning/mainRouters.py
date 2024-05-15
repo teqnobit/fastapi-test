@@ -18,6 +18,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+"""
+CORS: Cross-Origin Resource Sharing, ó, intercambio de recursos de origen cruzado
+
+Es un mecanismo basado en cabeceras HTTP que permite a un servidor indicar cualquier dominio, 
+esquema o puerto con un origen distinto del suyo desde el que un navegador debería permitir 
+la carga de recursos.
+"""
 
 @app.get("/")
 def mainApi():
